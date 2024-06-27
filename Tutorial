@@ -1,0 +1,58 @@
+                            • coroutines •
+• Imagine the situation: using Remote spy, you find a remote with InvokeServer(It named RemoteFunction) and do a for loop, but for some reason it starts one by one •
+• But if you run through your executor then they run without delay •
+
+• For such cases coroutine.wrap will help •
+• This feature can run loops without delay •
+• Here is an example script using coroutine.wrap: •
+
+for i = 1, 20 do
+  coroutine.wrap(function()
+ print("It text repeat " .. i .. " times ")
+  end)()
+end
+
+• This also works with functions: •
+
+coroutine.wrap(Func)()
+coroutine.wrap(TestFunc)()
+
+• this is useful if you want these functions to run immediately and without the need for the previous function to complete •
+
+• There are also other coroutines for example "task" •
+
+• 1. task.wait() does a better job of waiting for other resources than just wait() •
+• This coroutine performs the delay faster and has less load on the game •
+• Since task.wait() uses coroutines and not a blocking call it causes less lag •
+• Example using task.wait(): •
+
+local char = game.Players.LocalPlayer.Character
+repeat
+   task.wait()
+char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame + Vector3.new(0,1,0)
+until char.Humanoid.Health <= 0
+
+• 2. task.spawn runs the passed function in a separate coroutine •
+• The coroutine runs independently of the main thread, allowing tasks to be executed in parallel •
+• This helps avoid blocking the main thread and improves the efficiency and performance of your script •
+• In other words, task.spawn repeats the function, but in a different way •
+• Example using task.spawn(): •
+
+local function doSomething()
+    print("Start")
+    task.wait(1)
+    print("End")
+end
+
+task.spawn(doSomething)
+
+• 3. task.delay run function after a certain time •
+• Example using task.delay: •
+
+local function delayedPrint()
+    print("This message will be printed after a 2 second delay.")
+end
+
+task.delay(2, delayedPrint)
+
+• In roblox there are many different coroutines, but here the more useful ones are named, although they are all useful, well, this is the end of the repository, goodbye •
